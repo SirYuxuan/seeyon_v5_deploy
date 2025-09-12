@@ -1,0 +1,26 @@
+# 部署配置（示例）
+
+[ssh]
+# 服务器地址与端口
+host = "10.211.55.6"
+port = 22
+# 认证信息
+username = "root"
+password = "Yuxuanll2012!"
+# 可选超时（秒）
+timeout_secs = 5
+
+[paths]
+# 本地源目录
+local_apps = "/Users/yuxuan/Develop/Java/yinjinda/v5/apps-customize/target/classes/com/seeyon/apps"
+local_cfg_home = "/Users/yuxuan/Develop/Java/yinjinda/v5/apps-customize/src/main/webapp/WEB-INF/cfgHome"
+# 远端目标目录
+remote_apps = "/root/Seeyon/A8/ApacheJetspeed/webapps/seeyon/WEB-INF/classes/com/seeyon/apps"
+remote_cfg_home = "/root/Seeyon/A8/ApacheJetspeed/webapps/seeyon/WEB-INF/cfgHome"
+
+# 可选：远端关停脚本命令
+# shutdown_cmd = "/root/Seeyon/A8/shutdown.sh"
+# 可选：远端启动脚本命令
+# startup_cmd = "/root/Seeyon/A8/startup.sh"
+# 可选：远端查看日志脚本命令
+# showlog_cmd = "/root/Seeyon/A8/showLog.sh"
