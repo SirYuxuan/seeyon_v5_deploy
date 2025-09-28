@@ -35,6 +35,8 @@ pub struct PathsConfig {
     pub remote_apps: String,
     /// 远端 cfgHome 目录
     pub remote_cfg_home: String,
+    /// file指令的目标目录
+    pub file_target_dir: String,
 }
 
 /// 从 deploy.toml 加载配置：优先当前工作目录，其次可执行文件所在目录
