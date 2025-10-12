@@ -18,9 +18,4 @@ local_cfg_home = "/Users/yuxuan/Develop/Java/yinjinda/v5/apps-customize/src/main
 remote_apps = "/root/Seeyon/A8/ApacheJetspeed/webapps/seeyon/WEB-INF/classes/com/seeyon/apps"
 remote_cfg_home = "/root/Seeyon/A8/ApacheJetspeed/webapps/seeyon/WEB-INF/cfgHome"
 
-# 可选：远端关停脚本命令
-# shutdown_cmd = "/root/Seeyon/A8/shutdown.sh"
-# 可选：远端启动脚本命令
-# startup_cmd = "/root/Seeyon/A8/startup.sh"
-# 可选：远端查看日志脚本命令
-# showlog_cmd = "/root/Seeyon/A8/showLog.sh"
+file_target_dir = "/Users/yuxuan/Develop/Java/银金达/v5/apps-customize/target/classes"
