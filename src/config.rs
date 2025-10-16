@@ -39,6 +39,27 @@ pub struct PathsConfig {
     pub file_target_dir: String,
 }
 
+/// 获取配置文件所在目录
+pub fn get_config_dir() -> Result<PathBuf, Box<dyn std::error::Error>> {
+    // 1) 优先尝试当前工作目录下的 deploy.toml
+    let cwd_path = Path::new("deploy.toml");
+    if cwd_path.exists() {
+        return Ok(std::env::current_dir()?);
+    }
+
+    // 2) 回退到可执行文件所在目录
+    if let Ok(exe_path) = std::env::current_exe() {
+        if let Some(exe_dir) = exe_path.parent() {
+            let config_path = exe_dir.join("deploy.toml");
+            if config_path.exists() {
+                return Ok(exe_dir.to_path_buf());
+            }
+        }
+    }
+
+    Err("未找到配置文件 deploy.toml".into())
+}
+
 /// 从 deploy.toml 加载配置：优先当前工作目录，其次可执行文件所在目录
 pub fn load_config() -> Result<Config, Box<dyn std::error::Error>> {
     // 1) 优先尝试当前工作目录下的 deploy.toml

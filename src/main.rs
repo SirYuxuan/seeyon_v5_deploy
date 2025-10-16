@@ -79,8 +79,14 @@ fn main() {
                 std::process::exit(1);
             });
 
+            // 获取配置文件所在目录，缓存文件存储在此目录下
+            let config_dir = config::get_config_dir().unwrap_or_else(|e| {
+                eprintln!("获取配置目录失败: {}", e);
+                std::process::exit(1);
+            });
+
             let target_dir = &cfg.paths.file_target_dir;
-            let cache_file = format!("{}/md5_cache.json", target_dir);
+            let cache_file = config_dir.join("md5_cache.json");
 
             // 读取之前的MD5缓存
             let old_md5: HashMap<String, String> = if fs::metadata(&cache_file).is_ok() {
