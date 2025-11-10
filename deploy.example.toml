@@ -19,3 +19,7 @@ remote_apps = "/root/Seeyon/A8/ApacheJetspeed/webapps/seeyon/WEB-INF/classes/com
 remote_cfg_home = "/root/Seeyon/A8/ApacheJetspeed/webapps/seeyon/WEB-INF/cfgHome"
 
 file_target_dir = "/Users/yuxuan/Develop/Java/银金达/v5/apps-customize/target/classes"
+
+# Maven 配置（可选）
+[maven]
+maven_home = "/Users/yuxuan/SoftWare/maven/apache-maven-3.6.3"

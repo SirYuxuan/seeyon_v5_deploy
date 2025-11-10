@@ -7,6 +7,8 @@ use std::path::{Path, PathBuf};
 pub struct Config {
     pub ssh: SshConfig,
     pub paths: PathsConfig,
+    /// Maven 配置（可选）
+    pub maven: Option<MavenConfig>,
     /// 可选的远端关停脚本命令
     pub shutdown_cmd: Option<String>,
     /// 可选的远端启动脚本命令
@@ -23,6 +25,12 @@ pub struct SshConfig {
     pub password: String,
     /// 超时秒数（可选）
     pub timeout_secs: Option<u64>,
+}
+
+#[derive(Debug, Deserialize, Clone)]
+pub struct MavenConfig {
+    /// Maven 安装目录路径
+    pub maven_home: String,
 }
 
 #[derive(Debug, Deserialize, Clone)]

@@ -31,6 +31,11 @@ enum Commands {
     Deploy,
     /// Process files and detect changes
     File,
+    /// Switch Maven settings file
+    Mvn {
+        /// Settings profile name (e.g., yjd, zzdt). If not specified, uses default settings.xml
+        profile: Option<String>,
+    },
 }
 
 fn main() {
@@ -156,6 +161,60 @@ fn main() {
             }
 
             info!("处理了 {} 个变动的文件", changed_count);
+        }
+        Commands::Mvn { profile } => {
+            // 加载配置
+            let cfg = config::load_config().unwrap_or_else(|e| {
+                eprintln!("加载配置失败: {}", e);
+                std::process::exit(1);
+            });
+
+            // 获取 Maven 配置，如果没有配置则使用默认路径
+            let maven_home = if let Some(ref maven_config) = cfg.maven {
+                &maven_config.maven_home
+            } else {
+                "/Users/yuxuan/SoftWare/maven/apache-maven-3.6.3"
+            };
+
+            let settings_base_dir = format!("{}/conf/settings", maven_home);
+            let target_settings = format!("{}/conf/settings.xml", maven_home);
+
+            // 删除原来的 settings.xml
+            if fs::metadata(&target_settings).is_ok() {
+                if let Err(e) = fs::remove_file(&target_settings) {
+                    eprintln!("删除原 settings.xml 失败: {}", e);
+                    std::process::exit(1);
+                }
+                info!("已删除原 settings.xml");
+            }
+
+            // 根据参数选择源文件
+            let source_file = if let Some(ref profile_name) = profile {
+                format!("{}/settings-{}.xml", settings_base_dir, profile_name)
+            } else {
+                format!("{}/settings.xml", settings_base_dir)
+            };
+
+            // 检查源文件是否存在
+            if !fs::metadata(&source_file).is_ok() {
+                eprintln!("源文件不存在: {}", source_file);
+                std::process::exit(1);
+            }
+
+            // 复制文件
+            if let Err(e) = fs::copy(&source_file, &target_settings) {
+                eprintln!("复制文件失败 {} -> {}: {}", source_file, target_settings, e);
+                std::process::exit(1);
+            }
+
+            if let Some(ref profile_name) = profile {
+                info!(
+                    "已切换到 Maven 配置: {} (从 settings-{}.xml)",
+                    profile_name, profile_name
+                );
+            } else {
+                info!("已切换到 Maven 默认配置 (从 settings.xml)");
+            }
         }
     }
 }
