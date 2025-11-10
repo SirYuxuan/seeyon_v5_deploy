@@ -169,12 +169,8 @@ fn main() {
                 std::process::exit(1);
             });
 
-            // 获取 Maven 配置，如果没有配置则使用默认路径
-            let maven_home = if let Some(ref maven_config) = cfg.maven {
-                &maven_config.maven_home
-            } else {
-                "/Users/yuxuan/SoftWare/maven/apache-maven-3.6.3"
-            };
+            // 获取 Maven 配置
+            let maven_home = &cfg.maven.maven_home;
 
             let settings_base_dir = format!("{}/conf/settings", maven_home);
             let target_settings = format!("{}/conf/settings.xml", maven_home);

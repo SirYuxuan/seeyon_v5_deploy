@@ -7,8 +7,8 @@ use std::path::{Path, PathBuf};
 pub struct Config {
     pub ssh: SshConfig,
     pub paths: PathsConfig,
-    /// Maven 配置（可选）
-    pub maven: Option<MavenConfig>,
+    /// Maven 配置（必填）
+    pub maven: MavenConfig,
     /// 可选的远端关停脚本命令
     pub shutdown_cmd: Option<String>,
     /// 可选的远端启动脚本命令
